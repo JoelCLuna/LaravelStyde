@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddProfessionToUsers extends Migration
+class CreateProfessionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class AddProfessionToUsers extends Migration
      */
     public function up()
     {
-        //Schema::defaultStringLength(191);
-        Schema::table('users', function (Blueprint $table){
-            $table->string('profession', 50)->nullable()->after('password');
+        Schema::defaultStringLength(191);
+        Schema::create('professions', function (Blueprint $table) {
+            $table->increments('id');
 
+            $table->string('title', 100);
+
+            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -27,8 +29,6 @@ class AddProfessionToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users',function (Blueprint $table){
-           $table->dropColumn('profession');
-        });
+        Schema::dropIfExists('professions');
     }
 }
