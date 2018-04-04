@@ -1,7 +1,9 @@
 <?php
 
+use App\User;
+use App\Profession;
 use Illuminate\Database\Seeder;
-use \Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -14,11 +16,9 @@ class UserSeeder extends Seeder
     {
 //       $profession = DB::select('SELECT id FROM professions WHERE  title = ?',['Desarrollador Back-end']);
 
-      $professionId = DB::table('professions')
-            ->where('title','Desarrollador Back-end')
-            ->value('id');
+      $professionId = Profession::where('title','Desarrollador Back-end')->value('id');
 
-        DB::table('users')->insert([
+        User::create([
 
             'name'=> 'Joel Celaya',
             'email' => 'joelcluna@gmial.com',
