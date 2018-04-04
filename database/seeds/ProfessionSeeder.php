@@ -21,12 +21,15 @@ class ProfessionSeeder extends Seeder
         Profession::create([
             'title' => 'Desarrollador back-end',
         ]);
+
         Profession::create([
             'title' => 'Desarrollador front-end',
         ]);
+
         Profession::create([
             'title' => 'Diseñador web',
         ]);
+        Factory(Profession::class)->times(17)->create();
     }
 }
 
