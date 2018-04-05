@@ -31,9 +31,10 @@ class User extends Authenticatable
         'is_admin' => 'boolean'
     ];
 
+
     public static function findByEmail($email)
     {
-        return static::where('email', $email)->first();
+        return static::where(compact('email'))->first();
     }
 
     public function profession()
@@ -43,6 +44,6 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->email === 'joelcluna@gmail.com';
+        return $this->is_admin;
     }
 }
