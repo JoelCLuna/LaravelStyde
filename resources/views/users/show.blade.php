@@ -8,7 +8,7 @@
 <table class="table table-striped">
     <thead class="thead-dark">
        <tr>
-            <th class="header" scope="col" colspan="2">Mostrando detalles del usuario</th>
+            <th class="header" scope="col" colspan="2">Mostrando detalles de {{ $user->name }}</th>
        </tr>
     </thead>
     <tbody>
@@ -27,5 +27,7 @@
     </thead>
     </tbody>
 </table>
-
+    <p>
+        <a href="{{url('/usuarios')}}">Regresar</a>
+    </p>
 @endsection

@@ -11,6 +11,7 @@
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
         <th scope="col">Correo Electronico</th>
+        <th scope="col">Ver</th>
     </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
             <th scope="row">{{ $user->id }}</th>
             <th>{{ $user->name }}</th>
             <th>{{ $user->email }} </th>
+            <th> <a href="{{ url('/usuarios/'.$user->id) }}">Detalle</a></th>
         </tr>
 
         @empty
