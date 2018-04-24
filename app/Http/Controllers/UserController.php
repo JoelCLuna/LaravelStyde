@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
 
-       // $users = DB::table('users')->get();
+        // $users = DB::table('users')->get();
         $users = User::all();
 
         $title = 'Listado de usuarios';
@@ -31,8 +31,17 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(){
-        return 'Procesando informacion...';
+    public function store()
+    {
+        $data= request()->all();
+
+        User::create([
+            'name'=>$data['name'],
+            'email'=>$data['email'],
+            'password'=>bcrypt($data['password']),
+        ]);
+
+        return redirect()->route('users.index');
     }
 }
 
