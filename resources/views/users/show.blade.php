@@ -28,6 +28,6 @@
     </tbody>
 </table>
     <p>
-        <a href="{{url('/usuarios')}}">Regresar</a>
+        <a href="{{url('/usuarios')}}"  class="btn btn-link">Regresar</a>
     </p>
 @endsection

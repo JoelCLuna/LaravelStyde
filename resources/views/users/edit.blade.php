@@ -3,8 +3,9 @@
 @section('title', "Crear Usuario")
 
 @section('content')
-    <h1 class="header">Editar usuario</h1>
-
+ <div class="card">
+    <h4 class="card-header">Crear usuario</h4>
+    <div class="card-body">
     @if ($errors->any())
         <div class="alert alert-danger">
             <h6>Por favor corrige los siguientes errores:</h6>
@@ -38,7 +39,10 @@
             </label>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+        <a href="{{ route('users.index') }}"  class="btn btn-link">Regresar a lista de usuarios</a>
     </form>
+    </div>
+ </div>
 
-    <p> <a href="{{ route('users.index') }}">Regresar</a></p>
+
 @endsection
