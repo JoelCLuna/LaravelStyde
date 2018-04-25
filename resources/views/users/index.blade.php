@@ -4,6 +4,7 @@
 
 @section('content')
     <h1>{{ $title }}</h1>
+    <p><a  class="btn btn-primary" href="{{ route('users.create') }}"> Nuevo Usuario</a> </p>
 
 <table class="table table-striped">
     <thead class="thead-dark">
@@ -12,6 +13,8 @@
         <th scope="col">Nombre</th>
         <th scope="col">Correo Electronico</th>
         <th scope="col">Ver</th>
+        <th scope="col">Editar Usuario</th>
+        <th scope="col">Eliminar</th>
     </tr>
     </thead>
     <tbody>
@@ -20,7 +23,14 @@
             <th scope="row">{{ $user->id }}</th>
             <th>{{ $user->name }}</th>
             <th>{{ $user->email }} </th>
-            <th> <a href="{{ url('/usuarios/'.$user->id) }}">Detalle</a></th>
+            <th><a class="btn btn-success" href="{{ route('users.show', $user) }}">Detalle</a></th>
+            <th><a class="btn btn-warning" href="{{ route('users.edit', $user) }}">Editar</a> </th>
+            <form action="{{ route('users.destroy', $user) }}" method="POST">
+                {{csrf_field()}}
+                {{method_field('DELETE')}}
+                <th><button type="submit" class="btn btn-danger">Eliminar</button> </th>
+            </form>
+
         </tr>
 
         @empty

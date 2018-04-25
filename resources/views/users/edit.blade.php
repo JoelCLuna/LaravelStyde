@@ -20,7 +20,6 @@
         {{method_field('PUT')}}
         {{csrf_field() }}
 
-
         <div class="form-group">
             <label for="name">Nombre:</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Joel Celaya" value="{{old('name', $user->name)}}">
