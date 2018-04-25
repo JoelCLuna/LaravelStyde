@@ -36,10 +36,16 @@ class UserController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'email' => ['required', 'email', 'unique:users,email'],
-            'password'=>'required'
+            'password'=>['required','alpha_num','between:6,20']
 
         ], [
-            'name.required' => 'El campo nombre es obligatorio'
+            'name.required' => 'El campo nombre es obligatorio',
+            'email.required' => 'El campo Email es obligatorio',
+            'email.unique' => 'Ya existe un usuario con ese email',
+            'email.email'=>'El Email debe tener un formato adecuado : sucorrec@example.com',
+            'password.required'=>'La contraseña es obligatoria',
+            'password.alpha_num' => 'La contraseña debe tener solo caracteres alfanumericos',
+            'password.between'=> 'La contraseña debe estar entre 6 y 20 caracteres'
         ]);
 
         User::create([
@@ -49,6 +55,11 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('users.index');
+    }
+
+    public function edit(User $user)
+    {
+       return view('users.edit',['user' =>$user]);
     }
 }
 

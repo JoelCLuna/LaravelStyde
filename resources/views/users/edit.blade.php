@@ -3,16 +3,16 @@
 @section('title', "Crear Usuario")
 
 @section('content')
-    <h1 class="header">Crear usuario</h1>
+    <h1 class="header">Editar usuario</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">
             <h6>Por favor corrige los siguientes errores:</h6>
-           {{-- <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>--}}
+             <ul>
+                 @foreach($errors->all() as $error)
+                     <li>{{$error}}</li>
+                 @endforeach
+             </ul>
         </div>
     @endif
 
@@ -22,34 +22,22 @@
 
         <div class="form-group">
             <label for="name">Nombre:</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Joel Celaya" value="{{old('name')}}">
-            @if ($errors->has('name'))
-                <p>{{$errors->first('name')}}</p>
-            @endif
-
+            <input type="text" class="form-control" name="name" id="name" placeholder="Joel Celaya" value="{{old('name', $user->name)}}">
         </div>
         <div class="form-group">
             <label for="email">Correo Electronico:</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="sucorreo@example.com" value="{{old('email')}}">
-            @if ($errors->has('email'))
-                <p>{{$errors->first('email')}}</p>
-            @endif
+            <input type="email" class="form-control" name="email" id="email" placeholder="sucorreo@example.com" value="{{old('email', $user->email)}}">
         </div>
         <div class="form-group">
             <label for="pwd">Contraseña:</label>
             <input type="password" class="form-control" name="password" id="pwd" placeholder="Mayor a 6 caracteres">
-            @if ($errors->has('password'))
-                <p>{{$errors->first('password')}}</p>
-            @endif
         </div>
         <div class="form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox">Recordar Datos
             </label>
         </div>
-
-
-        <button type="submit" class="btn btn-primary">Crear Usuario</button>
+        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
     </form>
 
     <p> <a href="{{ route('users.index') }}">Regresar</a></p>

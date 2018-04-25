@@ -11,7 +11,7 @@ class UserModuleTest extends TestCase
 {
 
     use RefreshDatabase;
-    /** @test */
+    /** @test**/
     function it_shows_the_users_list()
     {
 
@@ -29,18 +29,14 @@ class UserModuleTest extends TestCase
             ->assertSee('Joel')
             ->assertSee('Ellie');
     }
-    /** @test */
+    /**@test**/
     function it_shows_a_default_message_if_the_users_list_is_empty()
     {
         $this->get('/usuarios')
             ->assertStatus(200)
             ->assertSee('No hay usuarios registrados.');
     }
-    /*
-    /*
-     *@test
-     *
-     */
+    /**@test**/
     function it_displays_the_users_details()
     {
         $user = factory(User::class)->create([
@@ -61,10 +57,7 @@ class UserModuleTest extends TestCase
     }
 
 
-    /*
-     *@test
-     *
-     */
+    /**@test**/
     function itLoads_the_new_Users_page()
     {
         $this->get('/usuarios/nuevo')
@@ -168,6 +161,20 @@ class UserModuleTest extends TestCase
             ->assertSessionHasErrors(['password']);
 
         $this->assertEquals(0, User::count());
+    }
+
+    /**@test**/
+    function itLoads_the_edit_user_page()
+    {
+        $user =factory(User::class)->create();
+
+        $this->get("/usuarios/{$user->id}/editar")
+            ->assertStatus(200)
+            ->assertViewIs('users.edit')
+            ->assertSee('Editar usuario')
+            ->assertViewHas('user', function ($viewUser) use ($user){
+                return $viewUser->id === $user->id;
+            });
     }
 
 }
