@@ -69,7 +69,7 @@ class UserModuleTest extends TestCase
     {
         $this->get('/usuarios/nuevo')
             ->assertStatus(200)
-            ->assertSee('Crear nuevo usuario');
+            ->assertSee('Crear usuario');
     }
 
     /**@test**/
@@ -106,6 +106,68 @@ class UserModuleTest extends TestCase
 //        $this->assertDatabaseMissing('users', [
 //            'email' => 'joel@buffalo.mx',
 //        ]);
+    }
+
+    /** @test**/
+    function the_email_is_required()
+    {
+        $this->from('usuarios/nuevo')
+            ->post('/usuarios/', [
+                'name' => 'Joel',
+                'email' => '',
+                'password' => '123456'
+            ])
+            ->assertRedirect('usuarios/nuevo')
+            ->assertSessionHasErrors(['email']);
+
+        $this->assertEquals(0, User::count());
+    }
+
+    /** @test**/
+    function the_email_must_be_valid()
+    {
+        $this->from('usuarios/nuevo')
+            ->post('/usuarios/', [
+                'name' => 'Joel',
+                'email' => 'correo-no-valido',
+                'password' => '123456'
+            ])
+            ->assertRedirect('usuarios/nuevo')
+            ->assertSessionHasErrors(['email']);
+
+        $this->assertEquals(0, User::count());
+    }
+
+    /** @test**/
+    function the_email_must_be_unique()
+    {
+        factory(User::class)->create([
+            'email' => 'joel@buffalo.mx'
+        ]);
+        $this->from('usuarios/nuevo')
+            ->post('/usuarios/', [
+                'name' => 'Joel',
+                'email' => 'joel@buffalo.mx',
+                'password' => '123456'
+            ])
+            ->assertRedirect('usuarios/nuevo')
+            ->assertSessionHasErrors(['email']);
+        $this->assertEquals(1, User::count());
+    }
+
+    /** @test */
+    function the_password_is_required()
+    {
+        $this->from('usuarios/nuevo')
+            ->post('/usuarios/', [
+                'name' => 'Joel',
+                'email' => 'joel@buffalo.mx',
+                'password' => ''
+            ])
+            ->assertRedirect('usuarios/nuevo')
+            ->assertSessionHasErrors(['password']);
+
+        $this->assertEquals(0, User::count());
     }
 
 }

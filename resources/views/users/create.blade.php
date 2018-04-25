@@ -3,7 +3,7 @@
 @section('title', "Crear Usuario")
 
 @section('content')
-    <h1 class="header" >Crear Usuario</h1>
+    <h1 class="header">Crear usuario</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">
