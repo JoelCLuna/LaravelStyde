@@ -21,8 +21,8 @@ class UserSeeder extends Seeder
         Factory(User::class)->create([
 
             'name'=> 'Joel Celaya',
-            'email' => 'joelcluna@gmail.com',
-            'password' => bcrypt('joelcluna'),
+            'email' => 'joelcluna@buffalo.mx',
+            'password' => bcrypt('luna'),
             'profession_id' => $professionId,
             'is_admin' => true,
         ]);

@@ -71,13 +71,13 @@ class UserModuleTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->post('/usuarios/', [
-            'name' => 'Joe',
+            'name' => 'Joel',
             'email' => 'joel@buffalo.mx',
             'password' => '123456'
         ])->assertRedirect('usuarios');
 
         $this->assertCredentials([
-            'name' => 'Joe',
+            'name' => 'Joel',
             'email' => 'joel@buffalo.mx',
             'password' => '123456'
         ]);
@@ -95,10 +95,9 @@ class UserModuleTest extends TestCase
             ])
             ->assertRedirect('usuarios/nuevo')
             ->assertSessionHasErrors(['name' => 'El campo nombre es obligatorio']);
+
         $this->assertEquals(0, User::count());
-//        $this->assertDatabaseMissing('users', [
-//            'email' => 'joel@buffalo.mx',
-//        ]);
+
     }
 
     /** @test**/
@@ -184,13 +183,13 @@ class UserModuleTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->put("/usuarios/{$user->id}", [
-            'name' => 'Joe',
+            'name' => 'Joel',
             'email' => 'joel@buffalo.mx',
             'password' => '123456'
         ])->assertRedirect("/usuarios/{$user->id}");
 
         $this->assertCredentials([
-            'name' => 'Joe',
+            'name' => 'Joel',
             'email' => 'joel@buffalo.mx',
             'password' => '123456'
         ]);
@@ -200,6 +199,7 @@ class UserModuleTest extends TestCase
     /** @test */
     function the_name_is_required_when_updating_the_user()
     {
+        $this->withoutExceptionHandling();
         $user =factory(User::class)->create();
 
         $this->from("/usuarios/{$user->id}/editar")
@@ -210,6 +210,8 @@ class UserModuleTest extends TestCase
             ])
             ->assertRedirect("/usuarios/{$user->id}/editar")
             ->assertSessionHasErrors(['name']);
+
+        $this->assertDatabaseMissing('users', ['email' => 'joel@buffalo.mx']);
     }
 
     /** @test**/
@@ -218,7 +220,7 @@ class UserModuleTest extends TestCase
         $user =factory(User::class)->create();
 
         $this->from("/usuarios/{$user->id}/editar")
-            ->post("/usuarios/{$user->id}", [
+            ->put("/usuarios/{$user->id}", [
                 'name' => 'Joel Celaya',
                 'email' => 'correo-no-valido',
                 'password' => '123456'
@@ -262,6 +264,7 @@ class UserModuleTest extends TestCase
                 'password' => '12345678'
             ])
             ->assertRedirect("usuarios/{$user->id}"); // (users.show)
+
         $this->assertDatabaseHas('users', [
             'name' => 'Joel Celaya',
             'email' => 'joel@buffalo.mx',
@@ -290,6 +293,22 @@ class UserModuleTest extends TestCase
             'email'=>'joel@buffalo.mx',
             'password' => $oldPasswd
         ]);
+    }
+    /** @test */
+    function it_deletes_a_users()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $this->delete("usuarios/{$user->id}")
+            ->assertRedirect('usuarios');
+
+        $this->assertDatabaseMissing('users',[
+            'id'=>$user->id
+        ]);
+
+
     }
 
 }
