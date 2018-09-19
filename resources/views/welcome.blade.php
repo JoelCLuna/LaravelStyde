@@ -9,6 +9,6 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Buffalo.mx</h1>
+<h1>BuffaloCustomCases.mx</h1>
 </body>
 </html>
